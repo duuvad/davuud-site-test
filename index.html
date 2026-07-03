@@ -16,33 +16,56 @@
   --serif:'Instrument Serif',Georgia,serif;--sans:'Inter Tight',system-ui,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--blue);color:#fff}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1360px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
 .cap{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase}
-.num-cap{font-variant-numeric:tabular-nums}
+
+/* Progress + sticky bar */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:60}
+#bar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--ink);transform:translateY(-105%);transition:transform .5s var(--ease),background .5s,border-color .5s}
+#bar.on{transform:translateY(0)}
+#bar .in{max-width:1360px;margin:0 auto;padding:14px var(--pad);display:flex;justify-content:space-between;align-items:center}
+#bar .bk{color:var(--blue)}
+#bar.nite{background:var(--ink);color:var(--paper);border-color:rgba(253,252,250,0.2)}
+
+/* Cursor */
+#cur{position:fixed;top:0;left:0;width:10px;height:10px;border-radius:50%;background:var(--ink);z-index:70;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:exclusion;background:#fff;display:none}
+html.fine #cur{display:block}
+#cur.big{width:56px;height:56px}
+html.fine a,html.fine button{cursor:none}
 
 /* Masthead */
 .mast{padding-top:24px}
 .mast .meta{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:13px;color:var(--ink2)}
 .mast .meta a{color:var(--blue)}
 .mast h1{font-family:var(--serif);font-weight:400;font-size:clamp(66px,15.6vw,224px);line-height:0.9;letter-spacing:-0.02em;padding:clamp(18px,2.6vw,44px) 0 clamp(14px,2vw,32px);border-top:1px solid var(--ink);white-space:nowrap}
-.mast h1 em{letter-spacing:-0.01em}
-.mast h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
-.mast h1 .word>span{display:inline-block;transform:translateY(108%);animation:rise 1.1s var(--ease) forwards}
-.mast h1 .word:nth-child(2)>span{animation-delay:.1s}
-@keyframes rise{to{transform:translateY(0)}}
+.mast h1 .l{position:relative;display:inline-block;opacity:0;transform:translateY(0.35em)}
+.mast h1 .l>span{display:block;transition:opacity .28s}
+.mast h1 .l .it{position:absolute;inset:0;font-style:italic;opacity:0}
+.mast h1 .l.f>.rm{opacity:0}
+.mast h1 .l.f>.it{opacity:1}
 .mast .rule2{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);height:6px}
+
+/* Reveal system */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.ln{position:relative}
+.ln::after{content:'';position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--rule);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease)}
+.ln.in::after{transform:scaleX(1)}
 
 /* Standfirst */
 .stand{display:grid;grid-template-columns:4fr 8fr;gap:clamp(28px,4vw,72px);padding:clamp(44px,5.5vw,88px) 0 clamp(48px,6vw,92px)}
 @media(max-width:760px){.stand{grid-template-columns:1fr;gap:20px}}
 .stand .side{color:var(--ink3);padding-top:12px}
-.stand p{font-family:var(--serif);font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-0.012em;opacity:0;animation:fade 1s .35s forwards}
-@keyframes fade{to{opacity:1}}
-.stand p em{color:var(--blue)}
-.stand .sub{font-family:var(--sans);font-size:clamp(15px,1.4vw,17px);color:var(--ink2);line-height:1.65;margin-top:28px;max-width:54ch;letter-spacing:0;animation-delay:.55s}
+.stand p{font-family:var(--serif);font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-0.012em}
+.stand p .w{display:inline-block;overflow:hidden;vertical-align:bottom}
+.stand p .w>span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease)}
+.stand p.go .w>span{transform:none}
+.stand p em{color:var(--blue);font-style:italic}
+.stand .sub{font-family:var(--sans);font-size:clamp(15px,1.4vw,17px);color:var(--ink2);line-height:1.65;margin-top:28px;max-width:54ch}
 
 /* Section scaffold */
 .feat{display:grid;grid-template-columns:minmax(150px,1fr) minmax(0,3.2fr);gap:clamp(24px,4vw,80px);padding:clamp(56px,7vw,112px) 0;border-top:1px solid var(--rule)}
@@ -52,11 +75,12 @@ a{color:inherit;text-decoration:none}
 
 /* 01 Record */
 .jumbo{display:flex;align-items:baseline;gap:clamp(18px,3vw,48px);flex-wrap:wrap}
-.jumbo .eight{font-family:var(--serif);font-style:italic;font-size:clamp(150px,21vw,330px);line-height:0.8;color:var(--blue);letter-spacing:-0.03em}
+.jumbo .eight{font-family:var(--serif);font-style:italic;font-size:clamp(150px,21vw,330px);line-height:0.8;letter-spacing:-0.03em;color:transparent;-webkit-text-stroke:2px var(--blue);background:linear-gradient(0deg,var(--blue) var(--fill,0%),transparent var(--fill,0%));-webkit-background-clip:text;background-clip:text}
+@supports not (-webkit-background-clip:text){.jumbo .eight{color:var(--blue);-webkit-text-stroke:0}}
 .jumbo .jtxt{max-width:24ch;font-family:var(--serif);font-size:clamp(24px,2.8vw,40px);line-height:1.12;letter-spacing:-0.008em;padding-bottom:clamp(6px,1vw,18px)}
 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,2.4vw,40px);margin-top:clamp(40px,5vw,68px);border-top:1px solid var(--ink);padding-top:clamp(22px,2.6vw,34px)}
 @media(max-width:680px){.strip{grid-template-columns:repeat(2,1fr);row-gap:36px}}
-.scell .num{font-family:var(--serif);font-size:clamp(34px,4vw,62px);line-height:1;letter-spacing:-0.01em;white-space:nowrap}
+.scell .num{font-family:var(--serif);font-size:clamp(34px,4vw,62px);line-height:1;letter-spacing:-0.01em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .scell .num i{font-style:italic;color:var(--blue)}
 .scell .lab{margin-top:10px;font-size:12px;color:var(--ink2);line-height:1.5;max-width:20ch}
 
@@ -70,8 +94,16 @@ a{color:inherit;text-decoration:none}
 .statement p:first-of-type::first-letter{font-family:var(--serif);font-size:4.5em;line-height:0.76;float:left;padding:7px 15px 0 0}
 
 /* 03 Engagements */
-.idx{border-top:1px solid var(--ink)}
-.row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.5fr);gap:clamp(16px,3vw,56px);padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.eng{position:relative}
+#ghost{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--serif);font-style:italic;font-size:clamp(120px,16vw,260px);color:var(--blue);opacity:0;transition:opacity .45s;pointer-events:none;white-space:nowrap;z-index:0}
+.idx{border-top:1px solid var(--ink);position:relative;z-index:1}
+.row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.5fr);gap:clamp(16px,3vw,56px);padding:clamp(22px,2.6vw,34px) 0;align-items:baseline;position:relative}
+.row::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--rule);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease)}
+.row.in::after{transform:scaleX(1)}
+.row::before{content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease);z-index:1}
+@media(hover:hover){.row:hover::before{transform:scaleX(1)}
+.row .nm{transition:transform .45s var(--ease)}
+.row:hover .nm{transform:translateX(12px)}}
 @media(max-width:680px){.row{grid-template-columns:1fr;gap:8px;padding:20px 0}}
 .row .nm{font-family:var(--serif);font-size:clamp(26px,3vw,44px);line-height:1.05;letter-spacing:-0.008em}
 .row .nm i{font-style:italic;color:var(--ink3);font-size:0.62em;letter-spacing:0}
@@ -80,13 +112,16 @@ a{color:inherit;text-decoration:none}
 .also{margin-top:clamp(26px,3vw,40px);color:var(--ink3);line-height:2.1}
 .also b{color:var(--ink2);font-weight:600}
 
-/* 04 Voices, dark bleed */
-.dark{background:var(--ink);color:var(--paper)}
+/* 04 Voices */
+.dark{background:var(--ink);color:var(--paper);clip-path:inset(0 0 100% 0);transition:clip-path 1.1s var(--ease)}
+.dark.in{clip-path:inset(0 0 0 0)}
 .dark .feat{border-top:none}
 .dark .side{color:rgba(253,252,250,0.42)}
 .lead-q{font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.9vw,58px);line-height:1.12;letter-spacing:-0.01em;max-width:24ch}
-.lead-q::before{content:'\201C';color:var(--blue)}
-.lead-q::after{content:'\201D';color:var(--blue)}
+.lead-q .w{display:inline-block;overflow:hidden;vertical-align:bottom}
+.lead-q .w>span{display:inline-block;transform:translateY(110%);transition:transform .8s var(--ease)}
+.lead-q.go .w>span{transform:none}
+.lead-q .qm{color:var(--blue)}
 .lead-who{margin-top:26px;color:rgba(253,252,250,0.5)}
 .lead-who b{color:var(--paper);font-weight:600}
 .qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(26px,3.4vw,56px);margin-top:clamp(48px,6vw,84px);border-top:1px solid rgba(253,252,250,0.18);padding-top:clamp(30px,3.6vw,52px)}
@@ -99,10 +134,12 @@ a{color:inherit;text-decoration:none}
 
 /* 05 Contact */
 .contact p{max-width:640px;font-size:clamp(18px,2vw,24px);line-height:1.55;color:var(--ink2)}
-.contact p .end{display:inline-block;width:0.5em;height:0.5em;background:var(--blue);margin-left:0.35em;vertical-align:baseline}
+.contact p .end{display:inline-block;width:0.5em;height:0.5em;background:var(--blue);margin-left:0.35em}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:28px;margin-top:38px}
-.btn{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;padding:19px 40px;transition:background .3s}
-.btn:hover{background:var(--blue)}
+.btn{position:relative;display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;padding:19px 40px;overflow:hidden;will-change:transform}
+.btn::before{content:'';position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.btn:hover::before{transform:scaleX(1)}
+.btn span{position:relative;z-index:1}
 .arrow{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue)}
 .arrow i{font-style:normal;transition:transform .3s var(--ease)}
 .arrow:hover i{transform:translateX(5px)}
@@ -113,86 +150,94 @@ footer p{font-size:12px;color:var(--ink3)}
 footer a{color:var(--blue)}
 
 @media(prefers-reduced-motion:reduce){
-  .mast h1 .word>span{animation:none;transform:none}
-  .stand p{animation:none;opacity:1}
-  .arrow i{transition:none}
+  .rv,.row::after,.ln::after{opacity:1;transform:none;transition:none}
+  .mast h1 .l{opacity:1;transform:none}
+  .stand p .w>span,.lead-q .w>span{transform:none;transition:none}
+  .dark{clip-path:none;transition:none}
+  #cur{display:none!important}
+  html.fine a{cursor:auto}
 }
 </style>
 </head>
 <body>
 
+<div id="prog"></div>
+<div id="bar"><div class="in"><span class="cap">Davuud Ghani</span><a class="cap bk" href="https://calendly.com/pivitt/meeting-with-davuud" data-h>Book a call &rarr;</a></div></div>
+<div id="cur"></div>
+
 <div class="wrap">
 <header class="mast">
   <div class="meta">
     <span class="cap">Founder &amp; Creative Director, Pivitt</span>
-    <a class="cap" href="https://pivitt.co.uk">pivitt.co.uk &rarr;</a>
+    <a class="cap" href="https://pivitt.co.uk" data-h>pivitt.co.uk &rarr;</a>
   </div>
-  <h1><span class="word"><span>Davuud&nbsp;</span></span><span class="word"><span><em>Ghani</em></span></span></h1>
+  <h1 id="name" aria-label="Davuud Ghani"><span data-w="Davuud" data-s="r"></span><span data-w="&nbsp;"></span><span data-w="Ghani" data-s="i"></span></h1>
   <div class="rule2"></div>
 </header>
 
 <section class="stand">
-  <div class="side cap">London</div>
+  <div class="side cap rv">London</div>
   <div>
-    <p>Fifteen years building brands for businesses that have <em>outgrown</em> theirs.</p>
-    <p class="sub">Eight of those years inside BMW Group. The rest across Universal Music, Nike, BBC, Rolls-Royce, Channel 4 News and companies you have not heard of yet.</p>
+    <p class="split">Fifteen years building brands for businesses that have <em>outgrown</em> theirs.</p>
+    <p class="sub rv">Eight of those years inside BMW Group. The rest across Universal Music, Nike, BBC, Rolls-Royce, Channel 4 News and companies you have not heard of yet.</p>
   </div>
 </section>
 
-<section class="feat">
-  <div class="side"><span class="cap"><i>01</i>The record</span></div>
+<section class="feat ln">
+  <div class="side"><span class="cap rv"><i>01</i>The record</span></div>
   <div>
     <div class="jumbo">
-      <div class="eight">8</div>
-      <div class="jtxt">years embedded inside BMW Group, across BMW, MINI and Motorrad.</div>
+      <div class="eight" id="eight">8</div>
+      <div class="jtxt rv">years embedded inside BMW Group, across BMW, MINI and Motorrad.</div>
     </div>
     <div class="strip">
-      <div class="scell"><div class="num">200,000+</div><div class="lab">creative assets delivered</div></div>
-      <div class="scell"><div class="num">160+</div><div class="lab">campaigns shipped</div></div>
-      <div class="scell"><div class="num">1,100<i>%</i></div><div class="lab">conversion growth, Universal Music</div></div>
-      <div class="scell"><div class="num">36<i>&rarr;</i>5</div><div class="lab">brand portfolio consolidated</div></div>
+      <div class="scell rv"><div class="num"><span data-count="200000">0</span>+</div><div class="lab">creative assets delivered</div></div>
+      <div class="scell rv"><div class="num"><span data-count="160">0</span>+</div><div class="lab">campaigns shipped</div></div>
+      <div class="scell rv"><div class="num"><span data-count="1100">0</span><i>%</i></div><div class="lab">conversion growth, Universal Music</div></div>
+      <div class="scell rv"><div class="num">36<i>&rarr;</i><span data-count="5">0</span></div><div class="lab">brand portfolio consolidated</div></div>
     </div>
   </div>
 </section>
 
-<section class="feat">
-  <div class="side"><span class="cap"><i>02</i>Position</span></div>
+<section class="feat ln">
+  <div class="side"><span class="cap rv"><i>02</i>Position</span></div>
   <div>
-    <div class="maxim">If it doesn&rsquo;t move revenue, it isn&rsquo;t <i>brand work.</i></div>
+    <div class="maxim rv">If it doesn&rsquo;t move revenue, it isn&rsquo;t <i>brand work.</i></div>
     <div class="statement">
-      <p>Most brands are built for the launch. They look right on day one and drift the moment the business moves. I build the other kind: <b>brand run as an operating system</b>, where strategy, identity and output stay aligned while the company scales.</p>
-      <p>That has held from BMW Group boardrooms to founder-led scale-ups. Different sectors, same pattern. The business had outgrown its brand, and the work closed that gap.</p>
+      <p class="rv">Most brands are built for the launch. They look right on day one and drift the moment the business moves. I build the other kind: <b>brand run as an operating system</b>, where strategy, identity and output stay aligned while the company scales.</p>
+      <p class="rv">That has held from BMW Group boardrooms to founder-led scale-ups. Different sectors, same pattern. The business had outgrown its brand, and the work closed that gap.</p>
     </div>
   </div>
 </section>
 
-<section class="feat">
-  <div class="side"><span class="cap"><i>03</i>Selected engagements</span></div>
+<section class="feat eng">
+  <div id="ghost"></div>
+  <div class="side"><span class="cap rv"><i>03</i>Selected engagements</span></div>
   <div>
     <div class="idx">
-      <div class="row"><div class="nm">BMW Group</div><div class="ds"><b>Eight years embedded.</b> 200,000+ assets and 160+ campaigns across BMW, MINI and Motorrad, from national campaigns to retail.</div></div>
-      <div class="row"><div class="nm">Universal Music Group</div><div class="ds"><b>Digital transformation.</b> Conversion performance grown 1,100% across the engagement.</div></div>
-      <div class="row"><div class="nm">Pansports</div><div class="ds"><b>Brand partner</b> to the group behind Real Madrid, FC Barcelona, Aston Martin F1 and Aramco.</div></div>
-      <div class="row"><div class="nm">ADB Safegate</div><div class="ds"><b>Portfolio consolidation.</b> A global architecture of 36 product brands rationalised to five.</div></div>
-      <div class="row"><div class="nm">Investment firm <i>confidential</i></div><div class="ds"><b>Scaled from startup to &pound;40M+ revenue</b>, with brand and demand strategy built from the ground up.</div></div>
-      <div class="row"><div class="nm">Home services brand</div><div class="ds"><b>&pound;300k to &pound;2.18M revenue</b>, finishing 118% above target.</div></div>
+      <div class="row" data-g="8 yrs"><div class="nm">BMW Group</div><div class="ds"><b>Eight years embedded.</b> 200,000+ assets and 160+ campaigns across BMW, MINI and Motorrad, from national campaigns to retail.</div></div>
+      <div class="row" data-g="1,100%"><div class="nm">Universal Music Group</div><div class="ds"><b>Digital transformation.</b> Conversion performance grown 1,100% across the engagement.</div></div>
+      <div class="row" data-g="F1"><div class="nm">Pansports</div><div class="ds"><b>Brand partner</b> to the group behind Real Madrid, FC Barcelona, Aston Martin F1 and Aramco.</div></div>
+      <div class="row" data-g="36&rarr;5"><div class="nm">ADB Safegate</div><div class="ds"><b>Portfolio consolidation.</b> A global architecture of 36 product brands rationalised to five.</div></div>
+      <div class="row" data-g="&pound;40M"><div class="nm">Investment firm <i>confidential</i></div><div class="ds"><b>Scaled from startup to &pound;40M+ revenue</b>, with brand and demand strategy built from the ground up.</div></div>
+      <div class="row" data-g="&pound;2.18M"><div class="nm">Home services brand</div><div class="ds"><b>&pound;300k to &pound;2.18M revenue</b>, finishing 118% above target.</div></div>
     </div>
-    <p class="also cap">Also worked with &nbsp;<b>Nike &middot; BBC &middot; Channel 4 News &middot; Savills &middot; BT &middot; Duracell &middot; Rolls&#8209;Royce &middot; MINI &middot; Jo Loves</b></p>
+    <p class="also cap rv">Also worked with &nbsp;<b>Nike &middot; BBC &middot; Channel 4 News &middot; Savills &middot; BT &middot; Duracell &middot; Rolls&#8209;Royce &middot; MINI &middot; Jo Loves</b></p>
   </div>
 </section>
 </div>
 
-<section class="dark">
+<section class="dark" id="dark">
   <div class="wrap">
     <div class="feat">
       <div class="side"><span class="cap"><i>04</i>In their words</span></div>
       <div>
-        <div class="lead-q">The ability to offer guidance and advice on bigger strategic objectives is exceptional.</div>
+        <div class="lead-q splitq"><span class="qm">&ldquo;</span>The ability to offer guidance and advice on bigger strategic objectives is exceptional.<span class="qm">&rdquo;</span></div>
         <div class="lead-who cap"><b>Duncan Balloch</b> &nbsp;&middot;&nbsp; Group Marketing Manager, BMW Group</div>
         <div class="qgrid">
-          <div class="q"><p>Davuud was excellent at working with us, diagnosing what we needed and delivering a great result. On top of his skill set, an all round great bloke.</p><div class="who cap"><b>Rob Cartwright</b><br>Brand Strategy &amp; CI Manager, Rolls&#8209;Royce Motor Cars</div></div>
-          <div class="q"><p>Very strategic and insightful. Would recommend for anyone looking to develop their brand strategy.</p><div class="who cap"><b>Ben Coe</b><br>Senior Brand Manager, Universal Music Group</div></div>
-          <div class="q"><p>Davuud is extremely knowledgeable and most certainly an expert in his field.</p><div class="who cap"><b>Danny McGuinness</b><br>Managing Director, B&nbsp;and&nbsp;M Joiners</div></div>
+          <div class="q rv"><p>Davuud was excellent at working with us, diagnosing what we needed and delivering a great result. On top of his skill set, an all round great bloke.</p><div class="who cap"><b>Rob Cartwright</b><br>Brand Strategy &amp; CI Manager, Rolls&#8209;Royce Motor Cars</div></div>
+          <div class="q rv"><p>Very strategic and insightful. Would recommend for anyone looking to develop their brand strategy.</p><div class="who cap"><b>Ben Coe</b><br>Senior Brand Manager, Universal Music Group</div></div>
+          <div class="q rv"><p>Davuud is extremely knowledgeable and most certainly an expert in his field.</p><div class="who cap"><b>Danny McGuinness</b><br>Managing Director, B&nbsp;and&nbsp;M Joiners</div></div>
         </div>
       </div>
     </div>
@@ -201,21 +246,182 @@ footer a{color:var(--blue)}
 
 <div class="wrap">
 <section class="feat" style="border-top:none">
-  <div class="side"><span class="cap"><i>05</i>Contact</span></div>
+  <div class="side"><span class="cap rv"><i>05</i>Contact</span></div>
   <div class="contact">
-    <p>Outside client work I mentor early-stage founders on positioning and growth. If your business has outgrown its brand, that is usually worth a conversation.<span class="end"></span></p>
-    <div class="cta-row">
-      <a class="btn" href="https://calendly.com/pivitt/meeting-with-davuud">Book a call</a>
-      <a class="arrow" href="https://pivitt.co.uk">Or start with Pivitt <i>&rarr;</i></a>
+    <p class="rv">Outside client work I mentor early-stage founders on positioning and growth. If your business has outgrown its brand, that is usually worth a conversation.<span class="end"></span></p>
+    <div class="cta-row rv">
+      <a class="btn" id="magbtn" href="https://calendly.com/pivitt/meeting-with-davuud" data-h><span>Book a call</span></a>
+      <a class="arrow" href="https://pivitt.co.uk" data-h>Or start with Pivitt <i>&rarr;</i></a>
     </div>
   </div>
 </section>
 
 <footer>
   <span class="cap">Davuud Ghani</span>
-  <p>London &middot; <a href="https://pivitt.co.uk">pivitt.co.uk</a> &middot; Set in Instrument Serif &amp; Inter Tight &middot; &copy; 2026</p>
+  <p>London &middot; <a href="https://pivitt.co.uk" data-h>pivitt.co.uk</a> &middot; Set in Instrument Serif &amp; Inter Tight &middot; &copy; 2026</p>
 </footer>
 </div>
 
+<script>
+(function(){
+var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+if(fine) document.documentElement.classList.add('fine');
+
+/* ---- Masthead letters ---- */
+var h1 = document.getElementById('name'), letters = [];
+h1.querySelectorAll('span[data-w]').forEach(function(w){
+  var word = w.getAttribute('data-w'), state = w.getAttribute('data-s')||'r';
+  w.textContent='';
+  var chars = word === '&nbsp;' ? ['\u00A0'] : word.split('');
+  chars.forEach(function(ch){
+    var l = document.createElement('span'); l.className='l'+(state==='i'?' f':'');
+    l.dataset.base = state;
+    var rmn = document.createElement('span'); rmn.className='rm'; rmn.textContent=ch;
+    var it = document.createElement('span'); it.className='it'; it.textContent=ch;
+    l.appendChild(rmn); l.appendChild(it); w.appendChild(l);
+    if(ch !== '\u00A0') letters.push(l);
+  });
+});
+/* entrance */
+var all = h1.querySelectorAll('.l');
+all.forEach(function(l,i){
+  if(rm){ l.style.opacity=1; l.style.transform='none'; return; }
+  l.style.transition='opacity .7s var(--ease) '+(i*45)+'ms, transform .7s var(--ease) '+(i*45)+'ms';
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ l.style.opacity=1; l.style.transform='translateY(0)'; }); });
+});
+/* italic wave sweep after entrance, both touch + fine */
+function sweep(){
+  letters.forEach(function(l,i){
+    setTimeout(function(){ l.classList.toggle('f'); }, i*55);
+    setTimeout(function(){ l.classList.toggle('f'); }, i*55+340);
+  });
+}
+if(!rm){ setTimeout(sweep, 1100); }
+/* cursor proximity flip (fine pointers) */
+if(fine && !rm){
+  var ticking=false, mx=0, my=0;
+  addEventListener('mousemove', function(e){
+    mx=e.clientX; my=e.clientY;
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      ticking=false;
+      var rect = h1.getBoundingClientRect();
+      if(my < rect.top-120 || my > rect.bottom+120){ letters.forEach(function(l){ l.classList.toggle('f', l.dataset.base==='i'); }); return; }
+      letters.forEach(function(l){
+        var r = l.getBoundingClientRect(), cx = r.left + r.width/2;
+        var near = Math.abs(mx - cx) < r.width*1.6;
+        var base = l.dataset.base==='i';
+        l.classList.toggle('f', near ? !base : base);
+      });
+    });
+  }, {passive:true});
+}
+
+/* ---- Word splitter for standfirst + lead quote ---- */
+function splitWords(el){
+  var nodes = Array.prototype.slice.call(el.childNodes);
+  el.textContent='';
+  nodes.forEach(function(n){
+    if(n.nodeType===3){
+      n.textContent.split(/(\s+)/).forEach(function(t){
+        if(!t) return;
+        if(/^\s+$/.test(t)){ el.appendChild(document.createTextNode(' ')); return; }
+        var w=document.createElement('span'); w.className='w';
+        var s=document.createElement('span'); s.textContent=t; w.appendChild(s); el.appendChild(w);
+      });
+    } else {
+      var w=document.createElement('span'); w.className='w';
+      var s=document.createElement('span'); s.appendChild(n.cloneNode(true)); w.appendChild(s); el.appendChild(w);
+    }
+  });
+}
+document.querySelectorAll('.split,.splitq').forEach(function(el){ if(!rm) splitWords(el); });
+function stagger(el){
+  el.querySelectorAll('.w>span').forEach(function(s,i){ s.style.transitionDelay=(i*38)+'ms'; });
+  el.classList.add('go');
+}
+if(!rm){ setTimeout(function(){ document.querySelectorAll('.split').forEach(stagger); }, 500); }
+else { document.querySelectorAll('.split,.splitq').forEach(function(e){e.classList.add('go');}); }
+
+/* ---- Reveal observer ---- */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+},{threshold:0.18});
+document.querySelectorAll('.rv,.row,.ln').forEach(function(el){ io.observe(el); });
+
+/* ---- Counters ---- */
+function count(el){
+  var end = parseInt(el.dataset.count,10), t0=null, D=1400;
+  function fmt(n){ return n.toLocaleString('en-GB'); }
+  if(rm){ el.textContent=fmt(end); return; }
+  function step(t){
+    if(!t0) t0=t;
+    var p = Math.min((t-t0)/D,1), e = 1-Math.pow(1-p,3);
+    el.textContent = fmt(Math.round(end*e));
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+var cio = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ count(e.target); cio.unobserve(e.target);} });
+},{threshold:0.6});
+document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+/* ---- Ink-fill 8 + progress + sticky bar ---- */
+var eight=document.getElementById('eight'), prog=document.getElementById('prog'), bar=document.getElementById('bar');
+var mast=document.querySelector('.mast'), dark=document.getElementById('dark');
+function onScroll(){
+  var sc = scrollY, dh = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (dh>0 ? (sc/dh*100) : 0)+'%';
+  bar.classList.toggle('on', sc > mast.offsetTop + mast.offsetHeight);
+  var r = eight.getBoundingClientRect();
+  var p = Math.min(Math.max((innerHeight*0.85 - r.top) / (r.height + innerHeight*0.25), 0), 1);
+  eight.style.setProperty('--fill', (rm?100:p*100)+'%');
+  var dr = dark.getBoundingClientRect();
+  bar.classList.toggle('nite', dr.top < 60 && dr.bottom > 60);
+  if(!dark.classList.contains('in') && dr.top < innerHeight*0.8){
+    dark.classList.add('in');
+    var lq=document.querySelector('.lead-q');
+    if(lq){ if(rm){ lq.classList.add('go'); } else { setTimeout(function(){ stagger(lq); }, 350); } }
+  }
+}
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* ---- Ghost watermark ---- */
+var ghost=document.getElementById('ghost');
+if(fine){
+  document.querySelectorAll('.row').forEach(function(row){
+    row.addEventListener('mouseenter', function(){ ghost.innerHTML=row.dataset.g; ghost.style.opacity=0.07; });
+    row.addEventListener('mouseleave', function(){ ghost.style.opacity=0; });
+  });
+}
+
+/* ---- Custom cursor ---- */
+if(fine && !rm){
+  var cur=document.getElementById('cur');
+  addEventListener('mousemove', function(e){ cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; }, {passive:true});
+  document.querySelectorAll('a,[data-h],.row').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ cur.classList.add('big'); });
+    el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); });
+  });
+}
+
+/* ---- Magnetic button ---- */
+var mb=document.getElementById('magbtn');
+if(fine && !rm && mb){
+  mb.addEventListener('mousemove', function(e){
+    var r=mb.getBoundingClientRect();
+    var dx=(e.clientX-(r.left+r.width/2))/r.width, dy=(e.clientY-(r.top+r.height/2))/r.height;
+    mb.style.transform='translate('+(dx*10)+'px,'+(dy*8)+'px)';
+  });
+  mb.addEventListener('mouseleave', function(){ mb.style.transform=''; });
+}
+})();
+</script>
 </body>
 </html>
