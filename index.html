@@ -112,6 +112,18 @@ html.fine a,html.fine button{cursor:none}
 .also{margin-top:clamp(26px,3vw,40px);color:var(--ink3);line-height:2.1}
 .also b{color:var(--ink2);font-weight:600}
 
+.row{cursor:pointer}
+.row .plus{position:absolute;right:2px;top:clamp(22px,2.6vw,34px);font-family:var(--serif);font-size:26px;line-height:0.6;color:var(--blue);transition:transform .5s var(--ease)}
+.row.open .plus{transform:rotate(45deg)}
+.row .more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s var(--ease)}
+.row .more>div{overflow:hidden}
+.row .more p{font-size:15px;color:var(--ink2);line-height:1.7;max-width:62ch;padding-top:16px}
+.row .more .voice{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);padding-top:14px;max-width:52ch}
+.row .more .voice b{font-family:var(--sans);font-style:normal;font-weight:600;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);display:block;padding-top:8px}
+.row.open .more{grid-template-rows:1fr}
+.row .nm,.row .ds{padding-right:34px}
+.hint{margin-top:10px;font-size:11px;color:var(--ink3);letter-spacing:0.04em}
+
 /* 04 Voices */
 .dark{background:var(--ink);color:var(--paper);clip-path:inset(0 0 100% 0);transition:clip-path 1.1s var(--ease)}
 .dark.in{clip-path:inset(0 0 0 0)}
@@ -212,15 +224,15 @@ footer a{color:var(--blue)}
 
 <section class="feat eng">
   <div id="ghost"></div>
-  <div class="side"><span class="cap rv"><i>03</i>Selected engagements</span></div>
+  <div class="side"><span class="cap rv"><i>03</i>Selected engagements</span><div class="hint rv">Select a row for the detail.</div></div>
   <div>
     <div class="idx">
-      <div class="row" data-g="8 yrs"><div class="nm">BMW Group</div><div class="ds"><b>Eight years embedded.</b> 200,000+ assets and 160+ campaigns across BMW, MINI and Motorrad, from national campaigns to retail.</div></div>
-      <div class="row" data-g="1,100%"><div class="nm">Universal Music Group</div><div class="ds"><b>Digital transformation.</b> Conversion performance grown 1,100% across the engagement.</div></div>
-      <div class="row" data-g="F1"><div class="nm">Pansports</div><div class="ds"><b>Brand partner</b> to the group behind Real Madrid, FC Barcelona, Aston Martin F1 and Aramco.</div></div>
-      <div class="row" data-g="36&rarr;5"><div class="nm">ADB Safegate</div><div class="ds"><b>Portfolio consolidation.</b> A global architecture of 36 product brands rationalised to five.</div></div>
-      <div class="row" data-g="&pound;40M"><div class="nm">Investment firm <i>confidential</i></div><div class="ds"><b>Scaled from startup to &pound;40M+ revenue</b>, with brand and demand strategy built from the ground up.</div></div>
-      <div class="row" data-g="&pound;2.18M"><div class="nm">Home services brand</div><div class="ds"><b>&pound;300k to &pound;2.18M revenue</b>, finishing 118% above target.</div></div>
+      <div class="row" data-g="8 yrs"><div class="nm">BMW Group</div><div class="ds"><b>Eight years embedded.</b> 200,000+ assets and 160+ campaigns across BMW, MINI and Motorrad, from national campaigns to retail.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>The longest relationship on the book, and it is still running. The work spans national campaign creative through to retail and point of sale across BMW, MINI and Motorrad.</p></div></div></div>
+      <div class="row" data-g="1,100%"><div class="nm">Universal Music Group</div><div class="ds"><b>Digital transformation.</b> Conversion performance grown 1,100% across the engagement.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>A conversion engagement treated as brand and funnel together. Performance across the engagement finished 1,100% up on the starting position.</p></div></div></div>
+      <div class="row" data-g="F1"><div class="nm">Pansports</div><div class="ds"><b>Brand partner</b> to the group behind Real Madrid, FC Barcelona, Aston Martin F1 and Aramco.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>Brand and creative partner to the sports group whose portfolio includes Real Madrid, FC Barcelona, Aston Martin F1 and Aramco.</p><div class="voice">&ldquo;Since we started working with Pivitt, our expectations have been exceeded.&rdquo;<b>Antonio Baganha &middot; Strategy &amp; Business Development, Pansports</b></div></div></div></div>
+      <div class="row" data-g="36&rarr;5"><div class="nm">ADB Safegate</div><div class="ds"><b>Portfolio consolidation.</b> A global architecture of 36 product brands rationalised to five.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>A global portfolio of 36 product brands, rationalised to a five-brand architecture that sales and marketing teams can actually run.</p></div></div></div>
+      <div class="row" data-g="&pound;40M"><div class="nm">Investment firm <i>confidential</i></div><div class="ds"><b>Scaled from startup to &pound;40M+ revenue</b>, with brand and demand strategy built from the ground up.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>The client was buying attention at the bottom of the funnel while the search demand sat at the top. The funnel was reverse engineered from direct and indirect competitors and rebuilt as a value delivery system. Revenue passed &pound;40M.</p></div></div></div>
+      <div class="row" data-g="&pound;2.18M"><div class="nm">Home services brand</div><div class="ds"><b>&pound;300k to &pound;2.18M revenue</b>, finishing 118% above target.</div><span class="plus" aria-hidden="true">+</span><div class="more"><div><p>Brand and demand built together from a &pound;300k base. The programme closed at &pound;2.18M, 118% above the growth target.</p></div></div></div>
     </div>
     <p class="also cap rv">Also worked with &nbsp;<b>Nike &middot; BBC &middot; Channel 4 News &middot; Savills &middot; BT &middot; Duracell &middot; Rolls&#8209;Royce &middot; MINI &middot; Jo Loves</b></p>
   </div>
@@ -400,6 +412,14 @@ if(fine){
     row.addEventListener('mouseleave', function(){ ghost.style.opacity=0; });
   });
 }
+
+/* ---- Expandable rows ---- */
+document.querySelectorAll('.row').forEach(function(row){
+  row.setAttribute('tabindex','0'); row.setAttribute('role','button'); row.setAttribute('aria-expanded','false');
+  function tog(){ var o = row.classList.toggle('open'); row.setAttribute('aria-expanded', o); }
+  row.addEventListener('click', function(e){ if(window.getSelection().toString()) return; tog(); });
+  row.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); } });
+});
 
 /* ---- Custom cursor ---- */
 if(fine && !rm){
