@@ -261,19 +261,28 @@
   function bindSwipes(){
     [].slice.call(document.querySelectorAll('.fit .swipe')).forEach(function(row){
       if(row.__sw)return;row.__sw=1;
-      var items=[].slice.call(row.children).reduce(function(a,c){return a.concat(c.classList.contains('side')?[].slice.call(c.children):[c])},[]);
-      if(items.length<2)return;
+      var all=[].slice.call(row.children).reduce(function(a,c){return a.concat(c.classList.contains('side')?[].slice.call(c.children):[c])},[]);
+      if(all.length<2)return;
       var d=document.createElement('div');d.className='dots';d.setAttribute('aria-hidden','true');
-      d.innerHTML=items.map(function(_,i){return '<i'+(i?'':' class="on"')+'></i>'}).join('')+'<span class="mono">1 / '+items.length+' · swipe</span>';
       row.parentNode.insertBefore(d,row.nextSibling);
-      var dots=[].slice.call(d.querySelectorAll('i')),lab=d.querySelector('.mono'),t=null;
-      row.addEventListener('scroll',function(){if(t)return;t=requestAnimationFrame(function(){t=null;
+      var items=[],n=-1,t=null;
+      function vis(){return all.filter(function(it){return it.offsetParent!==null&&getComputedStyle(it).display!=='none'})}
+      function draw(){items=vis();if(items.length!==n){n=items.length;d.innerHTML=items.map(function(){return '<i></i>'}).join('')+'<span class="mono"></span>'}
         var x=row.scrollLeft,best=0,bd=1e9;items.forEach(function(it,i){var dd=Math.abs(it.offsetLeft-row.offsetLeft-16-x);if(dd<bd){bd=dd;best=i}});
         if(row.scrollLeft+row.clientWidth>=row.scrollWidth-4)best=items.length-1;
-        dots.forEach(function(o,i){o.classList.toggle('on',i===best)});lab.textContent=(best+1)+' / '+items.length+' · swipe'})},{passive:true});
+        [].slice.call(d.querySelectorAll('i')).forEach(function(o,i){o.classList.toggle('on',i===best)});
+        d.querySelector('.mono').textContent=(best+1)+' / '+items.length+' · swipe';d.style.visibility=items.length>1?'':'hidden'}
+      draw();
+      row.addEventListener('scroll',function(){if(t)return;t=requestAnimationFrame(function(){t=null;draw()})},{passive:true});
+      document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.chip'))setTimeout(function(){row.scrollLeft=0;draw()},60)});
+      window.addEventListener('resize',draw);
+    });
+    [].slice.call(document.querySelectorAll('.fit .longbio')).forEach(function(p){
+      if(p.__mb)return;p.__mb=1;var b=document.createElement('button');b.type='button';b.className='more-bio';b.textContent='Read the full bio';
+      b.addEventListener('click',function(){var o=p.classList.toggle('open');b.textContent=o?'Show less':'Read the full bio'});
+      var cp=p.querySelector('.copy');p.insertBefore(b,cp);
     });
   }
-
   /* ---------- page switching (works inside the preview and on a real domain) ---------- */
   var cache={}, busy=false, quietHash=false;
   function fetchMain(name){
