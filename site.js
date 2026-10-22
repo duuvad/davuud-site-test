@@ -214,7 +214,7 @@
     }
     setupReveals();
     par=calm?[]:[].slice.call(document.querySelectorAll('.row img,.portrait .img img,.case-hero img'));
-    parallax();bindModels();bindSwipes();bindPreview();bindHover();bindFilter();bindFilm();navState();chrome();
+    parallax();bindModels();bindSwipes();bindForm();bindPreview();bindHover();bindFilter();bindFilm();navState();chrome();
   }
 
 
@@ -283,6 +283,24 @@
       var cp=p.querySelector('.copy');p.insertBefore(b,cp);
     });
   }
+
+  /* ---------- enquiry form: sends in place, Netlify Forms ---------- */
+  function bindForm(){
+    [].slice.call(document.querySelectorAll('form.cform')).forEach(function(f){
+      if(f.__b)return;f.__b=1;
+      var msg=f.querySelector('.fmsg'),btn=f.querySelector('button[type=submit]');
+      f.addEventListener('submit',function(e){
+        e.preventDefault();
+        if(!f.checkValidity()){f.reportValidity();return}
+        btn.disabled=true;msg.className='fmsg';msg.textContent='Sending…';
+        fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()})
+          .then(function(r){if(!r.ok)throw 0;f.classList.add('sent');msg.className='fmsg ok';msg.textContent='Thank you. Your message is in my inbox and I will reply from hello@davuud.com.';f.reset()})
+          .catch(function(){msg.className='fmsg err';msg.innerHTML='That did not send. Please email <a href="mailto:hello@davuud.com">hello@davuud.com</a>.'})
+          .then(function(){btn.disabled=false});
+      });
+    });
+  }
+
   /* ---------- page switching (works inside the preview and on a real domain) ---------- */
   var cache={}, busy=false, quietHash=false;
   function fetchMain(name){

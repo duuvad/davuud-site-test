@@ -1145,3 +1145,43 @@ body.menu-open .mmenu a{transform:none;opacity:1}
 @media (max-width:760px){.faq summary{font-size:15px;padding-block:clamp(7px, 1.3svh, 12px)}.faq p{font-size:13.5px}}
 @media (max-width:760px) and (max-height:780px){.faq p{font-size:13px;line-height:1.45}}
 @media (max-width:760px) and (max-height:780px){.faq summary{font-size:14.5px;padding-block:7px}.faqsec .head h2{font-size:24px}}
+
+/* Contact: details left, enquiry form right; two screens on phones */
+.fit .cgrid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);column-gap:clamp(28px, 4.4vw, 80px);align-items:center}
+.fit .cgrid .scr{display:block}
+.fit .cgrid .cleft h2{font-size:clamp(32px, min(4.6vw, 7.4svh), 80px);max-width:13ch}
+.fit .cgrid .ways{grid-template-columns:1fr;gap:clamp(10px, 2svh, 20px);margin-top:clamp(18px, 4svh, 48px)}
+.cform{display:grid;gap:clamp(10px, 2svh, 20px);background:var(--wash);padding:clamp(20px, 3.4svh, 36px) clamp(20px, 2.6vw, 36px)}
+.cform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cform .frow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px, 1.6vw, 20px)}
+.cform .fld{display:grid;gap:6px}
+.cform .fld em{font-style:normal;color:var(--ink-3);text-transform:none;letter-spacing:0;margin-left:6px}
+.cform input[type=text],.cform input[type=email],.cform textarea{font:400 16px/1.4 var(--text);color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:0;padding:clamp(9px, 1.5svh, 13px) 14px;width:100%;transition:border-color .25s}
+.cform textarea{resize:vertical;min-height:clamp(70px, 12svh, 130px)}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--line)}
+.cform .topics{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cform .topics legend{margin-bottom:8px;padding:0}
+.cform .topics label{position:relative;cursor:pointer}
+.cform .topics input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.cform .topics span{display:inline-block;font-size:14px;font-weight:500;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);padding:8px 14px;border-radius:999px;transition:background .25s,color .25s,border-color .25s}
+.cform .topics input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff}
+.cform .topics input:focus-visible + span{outline:2px solid var(--line);outline-offset:2px}
+.cform .fsend{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.cform .btn{cursor:pointer;font-family:var(--text)}
+.cform .btn:disabled{opacity:.6;cursor:wait}
+.cform .fmsg{font-size:14.5px;color:var(--ink-2);min-height:0}
+.cform .fmsg:empty{display:none}
+.cform .fmsg.ok{color:var(--line);font-weight:500}
+.cform .fmsg.err a{color:var(--ink)}
+.cform.sent .frow,.cform.sent .fld,.cform.sent .topics,.cform.sent .fsend{display:none}
+@media (max-width:900px) and (min-width:761px){.fit .cgrid{grid-template-columns:1fr 1.15fr}}
+@media (max-width:760px){
+  .fit .cgrid{display:block}
+  .fit .cgrid .scr{display:flex}
+  .fit .cgrid .cleft h2{max-width:none}
+  .cform .frow{grid-template-columns:1fr}
+  .cform{margin-inline:-4px;padding:18px 16px}
+  .cform input[type=text],.cform input[type=email],.cform textarea{font-size:16px}
+}
+@media (max-width:760px) and (max-height:780px){.cform{gap:9px}.cform .fld{gap:4px}.cform textarea{min-height:64px}.cform .topics span{padding:6px 12px;font-size:13px}}
+@media (max-width:760px) and (max-height:780px){.cform input[type=text],.cform input[type=email],.cform textarea{padding:8px 12px}.cform textarea{min-height:56px}.cform .topics legend{margin-bottom:5px}.fit .contact .cright{padding-block:clamp(16px, 4svh, 40px)}}
