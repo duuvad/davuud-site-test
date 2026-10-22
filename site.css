@@ -1199,3 +1199,18 @@ body.menu-open .mmenu a{transform:none;opacity:1}
   .fit .band .record-foot .mono{font-size:10px}
 }
 .cform .topics legend em{font-style:normal;color:var(--ink-3);text-transform:none;letter-spacing:0;margin-left:6px}
+
+/* Guide pages */
+.glinks{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.glink{position:relative;display:grid;gap:10px;align-content:start;text-decoration:none;background:var(--wash);padding:clamp(20px, 3.4svh, 36px) clamp(20px, 2.4vw, 32px);transition:transform .45s var(--ease)}
+.glink h3{font-size:clamp(21px, min(2.2vw, 3.4svh), 32px);letter-spacing:-.03em;line-height:1.1;padding-right:28px;transition:color .3s}
+.glink p{color:var(--ink-2);font-size:clamp(14px, 1.8svh, 16px)}
+.glink .go{position:absolute;top:clamp(20px, 3.4svh, 36px);right:clamp(20px, 2.4vw, 32px);color:var(--ink-3)}
+.glink:hover h3,.glink:hover .go{color:var(--line)}
+.bparts{display:grid;grid-template-columns:repeat(5, minmax(0,1fr));gap:var(--gap)}
+.bparts .step h3{font-size:clamp(19px, min(1.8vw, 3svh), 26px);line-height:1.15}
+.bparts .step p{font-size:clamp(13.5px, 1.75svh, 15.5px)}
+@media (max-width:1100px){.bparts{grid-template-columns:repeat(3, minmax(0,1fr))}}
+@media (max-width:760px){.glinks{grid-template-columns:1fr}.bparts{grid-template-columns:1fr;gap:10px}.bparts .step{padding-top:10px;gap:4px}.bparts .step h3{font-size:17px}.bparts .step p{font-size:13.5px;line-height:1.45}}
+.fit .guide p{font-size:clamp(13.5px, 1.7svh, 15px)}
+@media (max-width:760px){.fit .bparts.swipe .step{background:var(--wash);padding:20px 18px;border-top:0;gap:8px}.fit .bparts.swipe .step h3{font-size:20px}.fit .bparts.swipe .step p{font-size:15px}}

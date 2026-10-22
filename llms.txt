@@ -1,12 +1,12 @@
 # Davuud Ghani
 
-> London brand consultant and AI systems builder, and founder of Pivitt. He builds the brands, and the AI systems behind them, that let a business move faster without losing itself.
+> London brand and AI consultant, and founder of Pivitt. He builds the brands, and the AI systems behind them, that let a business move faster without losing itself.
 
 Davuud Ghani sets a business's position, identity and story, and builds the AI systems that keep its work on brand and moving quickly. The brand work runs through Pivitt (https://pivitt.co.uk), the London consultancy he founded. The AI systems started as the ones Pivitt runs on.
 
 ## Facts
 - Name: Davuud Ghani
-- Role: brand consultant and AI systems builder; founder of Pivitt (Pivitt Ltd)
+- Role: brand and AI consultant who builds the AI systems as well as advising on them; founder of Pivitt (Pivitt Ltd)
 - Based: London, working with clients across the UK and worldwide
 - Works with: founders, CEOs and marketing leaders, mostly in professional services, property and investment
 - Contact: hello@davuud.com; https://www.linkedin.com/in/davuudghani/
@@ -25,6 +25,8 @@ Davuud Ghani sets a business's position, identity and story, and builds the AI s
 ## Pages
 - [Home](https://davuud.com/): who he is, the record, the AI systems, ways to work together
 - [AI systems](https://davuud.com/ai.html): the fourteen systems Pivitt runs on, what they changed, and building the same for other businesses
+- [AI workflow automation for professional services](https://davuud.com/ai-workflow-automation.html): four workflows Pivitt runs on, from brief capture to a daily brief, with what each changed
+- [AI brand guidelines](https://davuud.com/ai-brand-guidelines.html): the five parts a brand system needs once AI tools produce some of the work
 - [About](https://davuud.com/about.html): background, method and positions
 - [Work](https://davuud.com/work.html): ten case studies, including BMW Group, C-Quest and Black Mule
 - [Speaking](https://davuud.com/speaking.html): talks, bios and press details
