@@ -1127,3 +1127,21 @@ body.menu-open .mmenu a{transform:none;opacity:1}
 @media (min-width:761px){.fit .chapter .chtext:has(.ch-more + .ch-more) .prose{font-size:clamp(13.5px, 1.6svh, 16px);line-height:1.5}}
 @media (max-width:760px){.fit .case-intro{margin-top:12px}.fit .case-head .crumb{margin-bottom:8px}}
 @media (max-width:760px){.fit .case-head .lede{font-size:clamp(14.5px, 1.95svh, 17.5px)}.fit .case-meta{gap:6px 12px}}
+
+/* FAQ: answers open in place, the list fits one screen */
+.faqs{border-top:1px solid var(--ink);max-width:980px;margin-left:auto}
+.faq{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:clamp(11px, 2svh, 20px);font-family:var(--display);font-weight:300;font-size:clamp(18px, min(1.9vw, 3svh), 26px);letter-spacing:-.02em;line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{font-style:normal;font-family:var(--text);font-size:20px;color:var(--ink-3);transition:transform .35s var(--ease),color .3s;flex:none}
+.faq[open] summary i{transform:rotate(45deg);color:var(--line)}
+.faq summary:hover span{color:var(--line)}
+.faq p{color:var(--ink-2);font-size:clamp(14px, 1.85svh, 16.5px);max-width:70ch;padding:0 40px clamp(12px, 2.2svh, 22px) 0}
+@media (max-width:760px){.faqs{margin-left:0}.faq summary{font-size:17px}.faq p{padding-right:0;font-size:14.5px}}
+@media (max-width:760px){.faq summary{font-size:15.5px;padding-block:clamp(8px, 1.5svh, 12px)}.faq p{font-size:13.5px;line-height:1.5;padding-bottom:12px}}
+.faq summary{padding-block:clamp(8px, 1.5svh, 18px);font-size:clamp(17px, min(1.8vw, 2.7svh), 25px)}
+.faq p{font-size:clamp(13.5px, 1.75svh, 16px);padding-bottom:clamp(10px, 1.8svh, 20px)}
+.faqsec .head{margin-bottom:clamp(14px, 3.2svh, 56px)}
+@media (max-width:760px){.faq summary{font-size:15px;padding-block:clamp(7px, 1.3svh, 12px)}.faq p{font-size:13.5px}}
+@media (max-width:760px) and (max-height:780px){.faq p{font-size:13px;line-height:1.45}}
+@media (max-width:760px) and (max-height:780px){.faq summary{font-size:14.5px;padding-block:7px}.faqsec .head h2{font-size:24px}}
