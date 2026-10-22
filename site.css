@@ -668,3 +668,160 @@ body.menu-open .mmenu a{transform:none;opacity:1}
 .mflow strong{display:block;font-family:var(--display);font-weight:400;font-size:21px;letter-spacing:-.02em}
 .mflow span{color:var(--ink-2);font-size:15px}
 @media (max-width:820px){.dgm{display:none}.mflow{display:block}}
+
+/* ================= Screen fit: every section reads within one screen, on every device =================
+   --scr is the visible height under the header. Type and spacing scale with the shorter of width and height.
+   .sa sections split into .scr screens at every size; .sm sections split only on phones. */
+:root{--hdr:62px;--scr:calc(100svh - var(--hdr));--pad:clamp(26px, 6.5svh, 84px)}
+.fit > section,.fit > .band,.fit > .hero{min-height:var(--scr);margin:0;padding-block:var(--pad);display:flex;flex-direction:column;justify-content:center}
+.fit > * > .wrap{width:100%}
+.fit > .sa{display:block;padding-block:0;min-height:0}
+.fit > .sa .scr{min-height:var(--scr);padding-block:var(--pad);display:flex;flex-direction:column;justify-content:center}
+.fit .head{margin-bottom:clamp(18px, 4.2svh, 64px)}
+.fit .head h2{font-size:clamp(28px, min(5.4vw, 8.2svh), 84px)}
+.fit .aiband + section{padding-top:var(--pad)}
+
+/* Hero */
+.fit > .hero{padding-block:clamp(18px, 3.6svh, 56px)}
+.fit .hero-top{margin-bottom:clamp(10px, 2.2svh, 40px)}
+.fit .specimen h1{font-size:clamp(60px, min(15.6vw, 21svh), 236px)}
+.fit .hero-grid{margin-top:clamp(14px, 3.2svh, 56px);align-items:end}
+.fit .lede{font-size:clamp(20px, min(2.5vw, 3.8svh), 36px)}
+.fit .hero-lede{gap:clamp(18px, 3.4svh, 36px)}
+.fit .portrait{justify-self:end;width:min(100%, 30svh)}
+@media (max-width:1000px) and (min-width:641px){.fit .portrait{grid-column:8 / -1;max-width:none}.fit .hero-meta{grid-column:8 / -1;grid-row:2}.fit .hero-lede{grid-row:1 / span 2}}
+@media (max-width:640px){
+  .fit .specimen h1{font-size:min(23vw, 11.2svh)}
+  .fit .hero-top{flex-wrap:nowrap}
+  .fit .hero-top .mono{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fit .lede{font-size:clamp(19px, min(6vw, 3.1svh), 24px)}
+  .fit .btn{padding:13px 18px;font-size:14px}
+  .fit .hero-meta{grid-column:1 / span 7;grid-template-columns:1fr;gap:10px}
+  .fit .hero-meta .v{font-size:13px}
+  .fit .portrait{grid-column:8 / -1;width:100%;justify-self:stretch}
+  .fit .portrait figcaption{display:none}
+}
+
+/* Idea: body and the two gaps side by side on wide screens, two screens on phones */
+.fit .ideagrid{display:grid;grid-template-columns:repeat(12, minmax(0,1fr));column-gap:var(--gap)}
+.fit .ideagrid .scr{display:contents}
+.fit .ideagrid .head{grid-column:1 / -1}
+.fit .idea-body{align-content:start;grid-column:4 / span 5;font-size:clamp(14.5px, 1.9svh, 18px)}
+.fit .gaps{grid-column:9 / -1;grid-template-columns:1fr;margin-top:0;gap:clamp(18px, 3.4svh, 40px);align-self:start}
+.fit .gap{padding-top:clamp(12px, 2svh, 22px);gap:clamp(6px, 1.2svh, 12px)}
+.fit .gap h3{font-size:clamp(21px, min(2.2vw, 3.4svh), 32px)}
+.fit .gap p{font-size:clamp(14px, 1.8svh, 16.5px)}
+@media (max-width:1000px){.fit .idea-body{grid-column:1 / span 7}.fit .gaps{grid-column:8 / -1}}
+
+/* AI: the film gets its own screen, the proof the next */
+.fit > .aiband{padding-block:var(--pad)}
+.fit .homefilm{margin:0 0 0 auto;width:min(100%, calc((var(--scr) - 2 * var(--pad) - 15svh - 2 * clamp(28px, min(5.4vw, 8.2svh), 84px)) * 16 / 9))}
+.fit .ai2{background:var(--wash)}
+.fit .ai2 .ai-copy p:first-child{font-family:var(--display);font-weight:300;font-size:clamp(19px, min(2.3vw, 3.5svh), 32px);line-height:1.25;letter-spacing:-.02em}
+.fit .aipart{padding-block:clamp(9px, 1.8svh, 18px)}
+.fit .aipart span{font-size:clamp(13.5px, 1.75svh, 15px)}
+
+/* Record */
+.fit > .band{padding-block:var(--pad)}
+.fit .band .stat{padding-top:clamp(12px, 2.4svh, 30px);gap:clamp(6px, 1.4svh, 18px)}
+.fit .band .record .stat b{font-size:clamp(30px, min(4.2vw, 6.2svh), 60px)}
+.fit .band .stat p{font-size:clamp(13px, 1.7svh, 15.5px)}
+.fit .record.rec2{margin-top:clamp(14px, 3svh, 56px)}
+.fit .record-foot{margin-top:clamp(14px, 3svh, 44px)}
+
+/* Work: featured three in one row, then the index on its own screen */
+.fit .featured{gap:0}
+.fit .featured .row{gap:clamp(18px, 2.4vw, 40px)}
+.fit .cap{margin-top:clamp(10px, 1.8svh, 22px);grid-template-columns:1fr;gap:4px}
+.fit .cap .mono{justify-self:start;text-align:left}
+.fit .cap h3{font-size:clamp(21px, min(2.2vw, 3.5svh), 34px)}
+.fit .cap p{font-size:clamp(13.5px, 1.75svh, 15.5px);line-height:1.5;margin-top:4px}
+.fit .index{margin-top:0}
+.fit .irow{padding-block:clamp(6px, 1.1svh, 18px)}
+.fit .irow .client span{font-size:clamp(20px, min(2.8vw, 3.7svh), 40px)}
+.fit .more{margin-top:clamp(16px, 3svh, 40px)}
+
+/* Clients */
+.fit .quote.big blockquote{font-size:clamp(24px, min(3.9vw, 5svh), 58px)}
+.fit .side{gap:clamp(18px, 3.6svh, 52px)}
+.fit .side blockquote{font-size:clamp(15px, 1.95svh, 20px)}
+.fit .quote{gap:clamp(10px, 2svh, 22px)}
+
+/* Ways in */
+.fit .offer{padding:clamp(16px, 2.6svh, 26px) 22px;gap:clamp(6px, 1.2svh, 12px)}
+.fit .offer p{font-size:clamp(13.5px, 1.75svh, 15.5px)}
+
+/* Contact */
+.fit .contact h2{font-size:clamp(38px, min(8.4vw, 10.2svh), 150px);max-width:15ch;margin-top:clamp(10px, 2svh, 24px)}
+.fit .ways{margin-top:clamp(22px, 5svh, 80px)}
+
+/* Swipe rows: one item in view at a time on phones, with a counter */
+.dots{display:none}
+@media (max-width:760px){
+  .fit .swipe{display:flex !important;flex-direction:row !important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px !important;margin-inline:-16px;padding:2px 16px 4px;scroll-padding-inline:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .fit .swipe::-webkit-scrollbar{display:none}
+  .fit .swipe > *{flex:0 0 84% !important;width:auto !important;scroll-snap-align:start;min-width:0}
+  .fit .swipe .side{display:contents}
+  .fit .swipe .side > *{flex:0 0 84%;scroll-snap-align:start;min-width:0}
+  .dots{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .dots i{width:6px;height:6px;border-radius:50%;background:var(--rule);transition:background .3s,width .3s}
+  .dots i.on{background:var(--line);width:18px;border-radius:3px}
+  .dots .mono{margin-left:auto}
+  .band .dots i{background:rgba(255,255,255,.25)}
+  .fit .quotes.swipe .quote{background:var(--wash);padding:20px 18px}
+  .fit .quotes.swipe blockquote{font-size:clamp(15.5px, 2.1svh, 17px) !important;text-indent:0;line-height:1.35}
+  .fit .quotes.swipe{align-items:stretch}
+  .fit .offers.swipe .offer p{font-size:14.5px}
+  .fit .featured .row.swipe figure{flex-direction:column}
+}
+
+/* Phones: sm sections split into screens */
+@media (max-width:760px){
+  .fit > .sm{display:block;padding-block:0;min-height:0}
+  .fit > .sm .scr{min-height:var(--scr);padding-block:var(--pad);display:flex;flex-direction:column;justify-content:center}
+  .fit .ideagrid{display:block}
+  .fit .head h2{font-size:clamp(26px, min(8vw, 4.6svh), 40px)}
+  .fit .idea-body{font-size:clamp(15px, 2.05svh, 16.5px);gap:.9em}
+  .fit .band .record{grid-template-columns:repeat(2, minmax(0,1fr));row-gap:0}
+  .fit .band .stat,.fit .band .stat + .stat{padding:clamp(12px, 2svh, 20px) 12px clamp(14px, 2.4svh, 24px) 0;border-left:0}
+  .fit .band .stat:nth-child(even){padding-left:14px;border-left:1px solid rgba(255,255,255,.18)}
+  .fit .band .record .stat b{font-size:min(9vw, 5svh)}
+  .fit .band .stat p{font-size:13px;line-height:1.45}
+  .fit .record-foot{gap:8px}
+  .fit .homefilm{width:min(100%, calc((var(--scr) - 2 * var(--pad) - 4 * clamp(26px, min(8vw, 4.6svh), 40px) - 80px) * .8));margin-inline:auto}
+  .fit .ai2 .ai-copy p:first-child{font-size:clamp(17px, min(5vw, 2.6svh), 21px)}
+  .fit .ai-parts{margin-top:clamp(16px, 3svh, 28px)}
+  .fit .irow .client span{font-size:clamp(19px, min(5.6vw, 3svh), 24px)}
+  .fit .contact h2{font-size:clamp(34px, min(11.5vw, 6.2svh), 60px);max-width:none}
+  .fit .ways{grid-template-columns:1fr;gap:14px}
+}
+
+@media (max-width:860px){
+  .fit .irow{grid-template-columns:minmax(0,1fr) auto 18px;gap:12px;padding-block:clamp(9px, 1.5svh, 16px)}
+  .fit .irow .thumb,.fit .irow .d{display:none}
+  .fit .irow .d.s{display:block;grid-column:2;grid-row:1;padding:0;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);text-align:right}
+  .fit .irow .go{grid-column:3;grid-row:1}
+}
+@media (max-width:640px){
+  .fit .specimen h1{font-size:min(23vw, 10.4svh)}
+  .fit .lede{font-size:clamp(18px, min(5.5vw, 2.9svh), 23px)}
+  .fit .btn{padding:12px 16px;font-size:13.5px;gap:8px}
+  .fit .ai2 .ai-copy p:first-child{font-size:clamp(16px, min(4.6vw, 2.3svh), 20px)}
+  .fit .aipart{padding-block:clamp(8px, 1.3svh, 14px)}
+  .fit .aipart span{font-size:13.5px}
+}
+
+@media (max-width:640px) and (max-height:780px){
+  .fit .specimen h1{font-size:min(23vw, 9.8svh)}
+  .fit .hero-meta{gap:6px}
+  .fit .hero-meta .mono{font-size:10px}
+  .fit .portrait{grid-column:9 / -1}
+  .fit .hero-meta{grid-column:1 / span 8}
+  .fit .offers.swipe .offer p{font-size:13.5px}
+  .fit .head h2{font-size:clamp(25px, min(8vw, 4.2svh), 34px)}
+  .fit .lede{font-size:17.5px}
+  .fit .ai2 .ai-copy p:first-child{font-size:15.5px}
+  .fit .aipart{padding-block:7px}
+  .fit .head{margin-bottom:16px}
+}
+@media (max-width:1000px) and (min-width:761px){.fit .band .stat{padding-top:14px;padding-bottom:18px}.fit .record.rec2{margin-top:0}.fit .band .stat:nth-child(3){padding-left:0}}
