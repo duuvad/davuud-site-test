@@ -1198,3 +1198,4 @@ body.menu-open .mmenu a{transform:none;opacity:1}
   .fit .band .record-foot{margin-top:12px}
   .fit .band .record-foot .mono{font-size:10px}
 }
+.cform .topics legend em{font-style:normal;color:var(--ink-3);text-transform:none;letter-spacing:0;margin-left:6px}
